@@ -5,6 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ public class Amazon extends CommonAPI {
     public String searchButton = "nav-input";
     public String handSanitizerActualText = "//*[@id=\"search\"]/span/div/span/h1/div/div[1]/div/div/span[3]";
     public String handSanitizerExpectedText = "\"Hand sanitizer\"";
+    public String amazonTitle = "Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs & more";
+    public String helpTitle = "Amazon.com Help: Help";
 
     @FindBy(how = How.ID, using = "searchDropdownBox")
     public static WebElement allDropDown;
@@ -54,6 +58,26 @@ public class Amazon extends CommonAPI {
 
     @FindBy(xpath = "//*[@id=\"nav-xshop\"]/a[1]")
     public static WebElement todaysDealTab;
+
+
+    public void helpLinkClick(){
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+        driver.findElement(By.xpath("//*[@id=\"navFooter\"]/div[1]/div/div[7]/ul/li[8]/a")).click();
+    }
+
+    public boolean helpLinkVerificationText(){
+        driver.findElement(By.xpath("/html/body/div[1]/div[1]/h1")).isDisplayed();
+        return true;
+    }
+
+    public boolean registryVerificationText(){
+        driver.findElement(By.xpath("//a[text()='Registry']")).isDisplayed();
+        return true;
+    }
+
+
+
+
 
 
     public List<String> getItems() {
@@ -121,6 +145,13 @@ public class Amazon extends CommonAPI {
 
     public static void clickTodaysDeal(){
         todaysDealTab.click();
+    }
+
+    // This test tests that two users can successfully log in.
+    @DataProvider(name = "validLogins")
+    public static Object[][] twoLoginsCredentials() {
+        return new Object[][]{{"shakir.jahangir83@gmail.com", "BugBusters"},
+                {"ciara105@xhanimatedm.com", "BugBusters"}};
     }
 
 

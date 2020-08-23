@@ -13,7 +13,7 @@ public class AmazonTest extends Amazon {
 
     @Test()
     public void amazonHomePageTitle() {
-        Assert.assertEquals(driver.getTitle(), "Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs & more");
+        Assert.assertEquals(driver.getTitle(), amazonTitle);
     }
 
     @Test
@@ -43,12 +43,6 @@ public class AmazonTest extends Amazon {
         Assert.assertEquals(listOfText, expectedMenu);
     }
 
-    // This test tests that two users can successfully log in.
-    @DataProvider(name = "validLogins")
-    public static Object[][] twoLoginsCredentials() {
-        return new Object[][]{{"shakir.jahangir83@gmail.com", "BugBusters"},
-                {"ciara105@xhanimatedm.com", "BugBusters"}};
-    }
 
     @Test(dataProvider = "validLogins")
     public void testTwoUsersCanLogInSuccessfully(String email, String password) throws InterruptedException {
@@ -60,19 +54,19 @@ public class AmazonTest extends Amazon {
 
     @Test()
     public void testHelpLink(){
-        driver.findElement(By.xpath("//*[@id=\"navFooter\"]/div[1]/div/div[7]/ul/li[8]/a")).click();
-        Assert.assertEquals(driver.findElement(By.xpath("/html/body/div[1]/div[1]/h1")).isDisplayed(), true);
+        helpLinkClick();
+        Assert.assertTrue(helpLinkVerificationText(), "Test Failed");
     }
 
     @Test
     public void testHelpTitle(){
-        driver.findElement(By.xpath("//*[@id=\"navFooter\"]/div[1]/div/div[7]/ul/li[8]/a")).click();
-        Assert.assertEquals(driver.getTitle(), "Amazon.com Help: Help");
+        helpLinkClick();
+        Assert.assertEquals(driver.getTitle(), helpTitle);
     }
 
     @Test
     public void testRegistryTab(){
-        Assert.assertEquals(driver.findElement(By.xpath("//a[text()='Registry']")).isDisplayed(), true);
+        Assert.assertTrue(registryVerificationText(), "Test Failed.");
     }
 
     @Test
